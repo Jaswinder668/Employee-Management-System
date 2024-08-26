@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 30px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+    function myfunction()
+    {
+    	alert("Deleted Succesfully");
+    }
+    </script>
+</head>
+<body >
+  <div th:replace="navbar :: navbar"></div>
+    <div class="container">
+        <h1 style="color:white"class="text-center">Employee Management System</h1>
+
+    
+
+        <!-- Employee List -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Employee List</h5> 
+            </div>
+            <div class="card-body">
+                <table class="table table-striped" id="employeeTable">
+                    <thead>
+                        <tr>
+                        <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Salary</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         <tr th:each="employee : ${employees}">
+                         <td th:text="${employee.id}">Id</td>
+                        <td th:text="${employee.name}">Name</td>
+                        <td th:text="${employee.phone}">Phone</td>
+                        <td th:text="${employee.email}">Email</td>
+                        <td th:text="${employee.salary}">Salary</td>
+                        <td>
+                            <a th:href="@{/employee/updateForm/{id}(id=${employee.id})}" class="btn btn-warning btn-sm">Edit</a>
+                            <a th:href="@{/delete/{id}(id=${employee.id})}" onclick="myfunction()" class="btn btn-danger btn-sm" >Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById('addEmployeeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('employeeName').value;
+            const role = document.getElementById('employeeRole').value;
+            const email = document.getElementById('employeeEmail').value;
+
+            const table = document.getElementById('employeeTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            newRow.innerHTML = `
+                <tr>
+                    <td>${name}</td>
+                    <td>${role}</td>
+                    <td>${email}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
+                    </td>
+                </tr>
+            `;
+
+            // Clear the form
+            this.reset();
+        });
+
+        function deleteRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+    </script>
+</body>
+</html>

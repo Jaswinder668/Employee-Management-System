@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Contact</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 30px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .btn-back {
+            margin-top: 20px;
+        }
+        .navbar-brand img {
+            height: 40px; /* Adjust logo size */
+        }
+    </style>
+    <script>
+    function ValidateForm() {
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+        var email = document.getElementById("email").value;
+        var salary = document.getElementById("salary").value;
+        if (name === "" || phone === "" || email === "" || salary === "") {
+            alert("Please fill all fields");
+            return false;
+        } else {
+            alert("Data Saved Successfully");
+            return true;
+        }
+    }
+    </script>
+</head>
+<body>
+   <div th:replace="navbar :: navbar"></div>
+
+    <div class="container">
+        <h1 class="text-center">Add Contact</h1>
+
+        <!-- Add Contact Form -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Contact Details</h5>
+            </div>
+            <div class="card-body">
+                <form id="addContactForm" action="/saveEmployee" method="post" onsubmit="return ValidateForm()">
+                    <div class="form-group">
+                        <label for="contactName">Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter contact name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter contact phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email address</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter contact email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactSalary">Salary</label>
+                        <input type="text" id="salary" name="salary" class="form-control" placeholder="Enter your Salary" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Contact</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
